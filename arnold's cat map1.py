@@ -78,3 +78,31 @@ def polyalphabet_cipher(image, key1):
       cou += 1
       cou = (cou % l)
   return image
+
+def polyalphabet_cipher2(image, key1):
+  leni = len(image)
+  cou = 0
+  l = len(key1)
+  for x in range(leni):
+    for y in range(leni):
+      image[x][y][0] = (image[x][y][0] - key1[cou]) % 256
+      image[x][y][1] = (image[x][y][1] - key1[cou]) % 256
+      image[x][y][2] = (image[x][y][2] - key1[cou]) % 256
+      cou += 1
+      cou = (cou % l)
+  return image
+
+#дешифровка
+def decryption_image(imag, k1, k2, k3):
+  len_img = len(imag)
+  period = find_period(len_img)
+  count_mix = key_reading_for_mixing(period, k1)
+  k3 = transform_key(k3)
+  for i in range(k2):
+    imag = cat_arnold2(imag, count_mix, len_img)
+    plt.imshow(imag, cmap='gray')   # для 2D
+    plt.axis('off')                   # убрать оси
+    plt.show()
+    imag = polyalphabet_cipher2(imag, k3)
+    imag = cat_arnold(imag, count_mix, len_img)
+  return imag
