@@ -38,3 +38,21 @@ def find_period(N, max_iter=1000000):
     if period > max_iter:
       raise RuntimeError(f"Период не найден за {max_iter} итераций")
   return period
+
+def to_square(arr):
+  q = arr.shape
+  a = q[0]
+  b = q[1]
+  if a == b:
+    return arr
+  elif a > b:
+    black_column = np.array([[0, 0, 0] for i in range(a - b)])
+    new_arr = []
+    for i in range(a):
+      new_arr.append(np.concatenate([black_column, arr[i]]))
+    return new_arr
+  else:
+    black_string = np.array([[[0, 0, 0] for j in range(b)] for i in range(b - a)])
+    new_arr = np.concatenate([black_string,arr])
+    return new_arr
+
