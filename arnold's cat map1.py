@@ -56,3 +56,25 @@ def to_square(arr):
     new_arr = np.concatenate([black_string,arr])
     return new_arr
 
+def transform_key(key):
+  ans = []
+  for i in range(len(key)):
+    ans.append(ord(key[i]))
+  return ans
+
+def key_reading_for_mixing(period, key):
+  ans = period // 2 + ((-1) ** (period // 200)) * ((key + period) % 11)
+  return ans
+
+def polyalphabet_cipher(image, key1):
+  leni = len(image)
+  cou = 0
+  l = len(key1)
+  for x in range(leni):
+    for y in range(leni):
+      image[x][y][0] = (image[x][y][0] + key1[cou]) % 256
+      image[x][y][1] = (image[x][y][1] + key1[cou]) % 256
+      image[x][y][2] = (image[x][y][2] + key1[cou]) % 256
+      cou += 1
+      cou = (cou % l)
+  return image
