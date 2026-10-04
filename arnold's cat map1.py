@@ -106,3 +106,15 @@ def decryption_image(imag, k1, k2, k3):
     imag = polyalphabet_cipher2(imag, k3)
     imag = cat_arnold(imag, count_mix, len_img)
   return imag
+
+#шифруем изображение
+def encoding_image(arr, key1, key2, key3):
+  lenght_max = max(arr.shape)
+  period = find_period(lenght_max)
+  count_mix = key_reading_for_mixing(period, key1)
+  redacted_key3 = transform_key(key3)
+  for _ in range(key2):
+    redacted_image = cat_arnold(redacted_image, period - count_mix, lenght_max)
+    redacted_image = polyalphabet_cipher(redacted_image, redacted_key3)
+    redacted_image = cat_arnold2(redacted_image, period - count_mix, lenght_max)
+  return redacted_image
