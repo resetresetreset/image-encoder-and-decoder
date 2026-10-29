@@ -156,3 +156,8 @@ key3 = input("Введите ключ шифрования 3 (пароль):").r
 
 key_mixing = int(key1)
 key_cipher = key3
+
+if target == "1":
+  print(encoding_image(redacted_image, key_mixing, key2, key_cipher))
+else:
+  print(decryption_image(redacted_image, key_mixing, key2, key_cipher))
