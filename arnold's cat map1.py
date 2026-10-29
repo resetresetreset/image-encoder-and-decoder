@@ -134,3 +134,25 @@ target = input("введите цифру(1-шифровка, 2-дешифров
 while target != "1" or target != "2":
   print("ошибка")
   target = input("введите цифру(1-шифровка, 2-дешифровка):")
+# считывание ключа
+
+key1 = input("Введите ключ шифрования 1 (число):")
+while not(key1.isdigit()):
+  print("error")
+  key1 = input("Введите ключ шифрования 1 (число):")
+
+while True:
+    keyp = input("Введите ключ шифрования 2 (число <= 30):")
+    try:
+        key2 = int(keyp)
+    except ValueError:
+        print("error")
+        continue
+    if key2 > 30:
+        print("Число должно быть меньше 30.")
+        continue
+    break
+key3 = input("Введите ключ шифрования 3 (пароль):").replace(" ", "")
+
+key_mixing = int(key1)
+key_cipher = key3
