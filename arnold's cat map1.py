@@ -118,3 +118,13 @@ def encoding_image(arr, key1, key2, key3):
     redacted_image = polyalphabet_cipher(redacted_image, redacted_key3)
     redacted_image = cat_arnold2(redacted_image, period - count_mix, lenght_max)
   return redacted_image
+# Загрузка изображения
+img = Image.open('q.jpg')
+
+# Преобразование в массив NumPy
+arr = np.array(img)
+
+redacted_image = to_square(arr)
+plt.imshow(redacted_image, cmap='gray')   # для 2D
+plt.axis('off')                   # убрать оси
+plt.show()
