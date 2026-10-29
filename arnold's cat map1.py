@@ -128,3 +128,9 @@ redacted_image = to_square(arr)
 plt.imshow(redacted_image, cmap='gray')   # для 2D
 plt.axis('off')                   # убрать оси
 plt.show()
+
+print("что вы хотите сделать:")
+target = input("введите цифру(1-шифровка, 2-дешифровка):")
+while target != "1" or target != "2":
+  print("ошибка")
+  target = input("введите цифру(1-шифровка, 2-дешифровка):")
