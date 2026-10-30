@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 class ArnoldCipher:
     def __init__(self, image, key1, key2, key3):
-        # --- данные объекта ---
         self.image = image
         self.size = max(image.shape[:2])
         self.key1 = int(key1)
@@ -17,7 +16,6 @@ class ArnoldCipher:
         self.mix_count = self.key_reading_for_mixing(self.period, self.key1)
         self.cipher_key = self.transform_key(self.key3)
 
-    # ---------- вспомогательные "методы" ----------
     @staticmethod
     def find_period(N, max_iter=1_000_000):
         A = np.array([[2, 1], [1, 1]]) % N
@@ -86,7 +84,6 @@ class ArnoldCipher:
                 cou = (cou + 1) % l
         return image
 
-    # ---------- "публичные" действия ----------
     def encoding_image(self):
         img = self.image.copy()
         for _ in range(self.key2):
@@ -150,9 +147,8 @@ while True:
         continue
     break
 
-key3 = input("Введите ключ шифрования 3 (пароль):").replace(" ", "")
+key3 = input("Введите ключ шифрования 3 (пароль):")
 
-# создаём ОБЪЕКТ — конкретный шифровальщик для этой картинки и этих ключей
 cipher = ArnoldCipher(redacted_image, key1, key2, key3)
 
 match target:
