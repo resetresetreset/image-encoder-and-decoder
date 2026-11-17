@@ -116,48 +116,68 @@ def to_square(arr):
         black_string = np.array([[[0, 0, 0] for j in range(b)] for i in range(b - a)])
         new_arr = np.concatenate([black_string, arr])
         return new_arr
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
 
-img = Image.open('q.jpg')
-arr = np.array(img)
+# ---------- Внешние зависимости (предполагается, что определены) ----------
+# from arnold import ArnoldCipher
+# def to_square(arr): ...
 
-redacted_image = to_square(arr)
-plt.imshow(redacted_image, cmap='gray')
-plt.axis('off')
-plt.show()
 
-print("что вы хотите сделать:")
-target = input("введите цифру(1-шифровка, 2-дешифровка):")
-while target != "1" and target != "2":   # <-- было 'or', из-за чего цикл всегда срабатывал
-    print("ошибка")
+def main():
+    # 1. Загрузка и подготовка изображения
+    img = Image.open('q.jpg')
+    arr = np.array(img)
+    redacted_image = to_square(arr)
+
+    plt.imshow(redacted_image, cmap='gray')
+    plt.axis('off')
+    plt.show()
+
+    # 2. Выбор действия
+    print("что вы хотите сделать:")
     target = input("введите цифру(1-шифровка, 2-дешифровка):")
+    while target not in ("1", "2"):          # было 'or' → всегда True
+        print("ошибка")
+        target = input("введите цифру(1-шифровка, 2-дешифровка):")
 
-key1 = input("Введите ключ шифрования 1 (число):")
-while not key1.isdigit():
-    print("error")
+    # 3. Ключ 1 (число)
     key1 = input("Введите ключ шифрования 1 (число):")
-
-while True:
-    keyp = input("Введите ключ шифрования 2 (число <= 30):")
-    try:
-        key2 = int(keyp)
-    except ValueError:
+    while not key1.isdigit():
         print("error")
-        continue
-    if key2 > 30:
-        print("Число должно быть меньше 30.")
-        continue
-    break
+        key1 = input("Введите ключ шифрования 1 (число):")
 
-key3 = input("Введите ключ шифрования 3 (пароль):")
+    # 4. Ключ 2 (число ≤ 30)
+    while True:
+        keyp = input("Введите ключ шифрования 2 (число <= 30):")
+        try:
+            key2 = int(keyp)
+        except ValueError:
+            print("error")
+            continue
+        if key2 > 30:
+            print("Число должно быть меньше 30.")
+            continue
+        break
 
-cipher = ArnoldCipher(redacted_image, key1, key2, key3)
+    # 5. Ключ 3 (пароль)
+    key3 = input("Введите ключ шифрования 3 (пароль):")
 
-match target:
-    case "1":
-        result = cipher.encoding_image()
-    case "2":
-        result = cipher.decoding_image()
+    # 6. Шифрование / дешифрование
+    cipher = ArnoldCipher(redacted_image, key1, key2, key3)
 
-plt.imshow(result, cmap='gray')
-plt.axis('off')
-plt.show()
+    match target:
+        case "1":
+            result = cipher.encoding_image()
+        case "2":
+            result = cipher.decoding_image()
+
+    # 7. Показ результата
+    plt.imshow(result, cmap='gray')
+    plt.axis('off')
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
