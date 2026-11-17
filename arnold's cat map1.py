@@ -34,7 +34,8 @@ class ArnoldCipher:
 
     @staticmethod
     def key_reading_for_mixing(period, key):
-        return period // 2 + ((-1) ** (period // 200)) * ((key + period) % 11)
+
+        return period // 2 + ((-1) ** (period // (key % period + 1))) * ((key + period) % int(0.1 * period))
 
     @staticmethod
     def cat_arnold(image, itera, length):
